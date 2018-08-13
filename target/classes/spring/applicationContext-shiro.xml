@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-4.3.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+                     
+    
+      <!--定义cookie的属性  -->
+      <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+       <constructor-arg value="rememberMe" />
+       <property name="httpOnly" value="true" />
+       <!-- 默认记住7天（单位：秒） -->
+       <property name="maxAge" value="604800" />
+   </bean>
+   <!-- rememberMe管理器  (org.apache.shiro.codec.Base64).decode('')里面的key可以随意更改
+                    生成方法 在AbstractRememberMeManager类里：
+       AesCipherService aes = new AesCipherService();
+       byte[] key = aes.generateNewKey().getEncoded();
+       String base64 = Base64.encodeToString(key);
+   -->
+   <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+    <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('MPdCMZ9urzEA50JDlDYYDg==')}" />
+       <property name="cookie" ref="rememberMeCookie" />
+   </bean>
+    <!--自定义的拦截器  -->
+    <bean id="remeberFilter" class="com.demo.shiro.RemeberFilter" />
+    <!-- shiro配置 用于验证信息和权限 -->
+    <bean id="realm" class="com.demo.shiro.ShiroDBRealm" >
+    <!--密码匹配  --> 
+    <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                 <!--调用什么加密方法  -->
+                 <property name="hashAlgorithmName" value="MD5"></property> 
+                  <!--调用什么加密几次  -->
+                 <property name="hashIterations" value="1"></property>
+            </bean>
+        </property>        
+    </bean>
+    
+    <!--配置 securityManager -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+	        <property name="realm" ref="realm" />   
+	        <property name="rememberMeManager" ref="rememberMeManager" />     	   		
+	</bean>
+	
+	
+    <!--shiroFilter这个名字 一定要和web.xml的名字一样  -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">		    	
+	    <!-- Shiro的核心安全接口，这个属性是必须的 -->
+	    <property name="securityManager" ref="securityManager"/>
+	    <!--登录的url 如果没有登录 就会跳转到该页面  --> 
+	    <property name="loginUrl" value="/"/>
+	    <!--没权限的url  -->
+	    <property name="unauthorizedUrl" value="/"/>
+	    <!--配置自己的过滤器  -->
+	    <property name="filters">
+	       <util:map>
+              <entry key="remeberFilter" value-ref="remeberFilter"></entry>
+           </util:map>  
+	    </property>
+	    <!--验证规则 只有要一个符合 下面的就不会执行 所以匿名访问的要写在前面  -->
+	    <property name="filterChainDefinitions">
+	        <value>
+	        	/ = anon
+	        	/login.html = anon
+	            /public/** = anon
+	            /html/** = anon
+	            /userLogin = anon
+	          	/** = authc
+	        </value>
+	    </property>
+	</bean>
+	
+	
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+  
+</beans>

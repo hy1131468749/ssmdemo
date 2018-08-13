@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.UrlMapper">
+  <resultMap id="BaseResultMap" type="com.demo.bean.Url">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="url_address" jdbcType="VARCHAR" property="urlAddress" />
+    <result column="url_name" jdbcType="VARCHAR" property="urlName" />
+    <result column="url_level" jdbcType="INTEGER" property="urlLevel" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="icon_name" jdbcType="VARCHAR" property="iconName" />
+    <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
+    <result column="url_sequence" jdbcType="INTEGER" property="urlSequence" />
+    <result column="parent_yes" jdbcType="TINYINT" property="parentYes" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, url_address, url_name, url_level, parent_id, remark, create_time, update_time, 
+    icon_name, icon_url, url_sequence, parent_yes
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from url
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from url
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.demo.bean.Url">
+    insert into url (id, url_address, url_name, 
+      url_level, parent_id, remark, 
+      create_time, update_time, icon_name, 
+      icon_url, url_sequence, parent_yes
+      )
+    values (#{id,jdbcType=BIGINT}, #{urlAddress,jdbcType=VARCHAR}, #{urlName,jdbcType=VARCHAR}, 
+      #{urlLevel,jdbcType=INTEGER}, #{parentId,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{iconName,jdbcType=VARCHAR}, 
+      #{iconUrl,jdbcType=VARCHAR}, #{urlSequence,jdbcType=INTEGER}, #{parentYes,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.bean.Url">
+    insert into url
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="urlAddress != null">
+        url_address,
+      </if>
+      <if test="urlName != null">
+        url_name,
+      </if>
+      <if test="urlLevel != null">
+        url_level,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="iconName != null">
+        icon_name,
+      </if>
+      <if test="iconUrl != null">
+        icon_url,
+      </if>
+      <if test="urlSequence != null">
+        url_sequence,
+      </if>
+      <if test="parentYes != null">
+        parent_yes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="urlAddress != null">
+        #{urlAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="urlName != null">
+        #{urlName,jdbcType=VARCHAR},
+      </if>
+      <if test="urlLevel != null">
+        #{urlLevel,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iconName != null">
+        #{iconName,jdbcType=VARCHAR},
+      </if>
+      <if test="iconUrl != null">
+        #{iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="urlSequence != null">
+        #{urlSequence,jdbcType=INTEGER},
+      </if>
+      <if test="parentYes != null">
+        #{parentYes,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.bean.Url">
+    update url
+    <set>
+      <if test="urlAddress != null">
+        url_address = #{urlAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="urlName != null">
+        url_name = #{urlName,jdbcType=VARCHAR},
+      </if>
+      <if test="urlLevel != null">
+        url_level = #{urlLevel,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iconName != null">
+        icon_name = #{iconName,jdbcType=VARCHAR},
+      </if>
+      <if test="iconUrl != null">
+        icon_url = #{iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="urlSequence != null">
+        url_sequence = #{urlSequence,jdbcType=INTEGER},
+      </if>
+      <if test="parentYes != null">
+        parent_yes = #{parentYes,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.bean.Url">
+    update url
+    set url_address = #{urlAddress,jdbcType=VARCHAR},
+      url_name = #{urlName,jdbcType=VARCHAR},
+      url_level = #{urlLevel,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      icon_name = #{iconName,jdbcType=VARCHAR},
+      icon_url = #{iconUrl,jdbcType=VARCHAR},
+      url_sequence = #{urlSequence,jdbcType=INTEGER},
+      parent_yes = #{parentYes,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectList"  resultMap="BaseResultMap">
+   select * from url
+  </select> 
+    <select id="selectListByIds"  resultMap="BaseResultMap"  parameterType="java.util.List">
+    select * from url
+    where id in 
+    <foreach open="(" close=")" separator="," item="id"  collection="list">
+             ${id}
+    </foreach>
+  </select> 
+</mapper>

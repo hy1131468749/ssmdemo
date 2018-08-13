@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Bootstrap 实例 - 垂直的胶囊式导航菜单</title>
+<link rel="stylesheet"
+	href="/ssmdemo/public/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="/ssmdemo/public/bootstrap-table/src/bootstrap-table.css">
+<script src="/ssmdemo/public/jquery-2.2.4.min.js"></script>
+<script src="/ssmdemo/public/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+<script src="/ssmdemo/public/vue.min.js"></script>
+<script src="/ssmdemo/public/layer-v3.1.1/layer/layer.js"></script>
+<script src="/ssmdemo/public/bootstrap-table/src/bootstrap-table.js"></script>
+<script
+	src="/ssmdemo/public/bootstrap-table/src/locale/bootstrap-table-zh-CN.js"></script>
+<script src="/ssmdemo/public/axios.min.js"></script>
+<style type="text/css">
+html, body {
+	margin: 0px 0px;
+	width: 100%;
+	height: 100%;
+}
+
+iframe {
+	margin: 0px 0px;
+	width: 100%;
+	height: 100%;
+}
+</style>
+
+</head>
+<body>
+
+	<div style="width: 100%; height: 100%; padding: 10px;">
+		<div style="height: 30px; width: 100%;">
+			<span style="font-size: 20px; color: blue;">测试系统</span>
+		</div>
+		<div id="menudiv">
+			<ul class="nav nav-pills nav-stacked"
+				style="width: 20%; float: left;">
+				<li class="active"><a href="#">用户菜单</a></li>
+				<li><a href="#">SVN</a></li>
+				<li><a href="#"
+					v-on:click="fordward('/ssmdemo/html/org/orglist.html')">组织管理</a></li>
+				<li><a href="#"
+					v-on:click="fordward('/ssmdemo/html/url/urllist.html')">菜单管理</a></li>
+				<li><a href="#"
+					v-on:click="fordward('/ssmdemo/html/user/userlist.html')">用户管理</a></li>
+				<li><a href="#"
+					v-on:click="fordward('/ssmdemo/html/upload.html')">文件上传</a></li>
+			</ul>
+		</div>
+		<iframe id="show" src="main.html"
+			style="width: 79%; height: 100%; float: right; border: 0px;">
+		</iframe>
+	</div>
+
+	<script type="text/javascript">
+		new Vue({
+			el : '#menudiv',
+			methods : {
+				fordward : function(url) {
+
+					$("#show").attr("src", url);
+				}
+			}
+		});
+	</script>
+
+</body>
+</html>
