@@ -1,38 +1,125 @@
 package com.demo.bean;
 
-public class Student {
+import java.util.Date;
 
-	private Integer stuId;
-	
-	private Integer stu_id;
-	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	private String stuName;
-	private Integer id;
-	public Integer getStuId() {
-		return stuId;
-	}
-	public void setStuId(Integer stuId) {
-		this.stuId = stuId;
-	}
-	public String getStuName() {
-		return stuName;
-	}
-	public void setStuName(String stuName) {
-		this.stuName = stuName;
-	}
-	public Integer getStu_id() {
-		return stu_id;
-	}
-	public void setStu_id(Integer stu_id) {
-		this.stu_id = stu_id;
-	}
-	
-	
-	
+public class Student {
+    private Long id;
+
+    private String name;
+
+    private Long number;
+
+    private Short age;
+
+    private String sex;
+
+    private String cName;
+
+    private String teacherName;
+
+    private Integer score;
+
+    private Date createTime;
+
+    private Date modifyTime;
+
+    private String remark;
+
+    private String cid;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
+
+    public Short getAge() {
+        return age;
+    }
+
+    public void setAge(Short age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
+    }
+
+    public String getcName() {
+        return cName;
+    }
+
+    public void setcName(String cName) {
+        this.cName = cName == null ? null : cName.trim();
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName == null ? null : teacherName.trim();
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getCid() {
+        return cid;
+    }
+
+    public void setCid(String cid) {
+        this.cid = cid == null ? null : cid.trim();
+    }
 }
