@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,6 +33,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.demo.util.JsonUtil;
 
 public class HttpHandler {
 	private static final Logger log = LoggerFactory.getLogger(HttpHandler.class);
@@ -253,15 +256,6 @@ public class HttpHandler {
 			e.printStackTrace();
 			// throw new
 			// HttpResponseException(HttpExceptionEnum.HTTP_REQUEST_FAILED);
-		} finally {
-			try {
-				if (response != null) {
-					response.close();
-				}
-
-			} catch (IOException e) {
-				log.error("IOException: " + e.getMessage());
-			}
 		}
 
 		return response;
@@ -279,12 +273,15 @@ public class HttpHandler {
 			HttpEntity entity = response.getEntity();
 			if (entity != null && entity.isStreaming()) {
 				String encoding = entity.getContentEncoding() != null ? entity.getContentEncoding().getValue() : null;
+				// 会释放掉 连接
 				body = EntityUtils.toString(entity, encoding);
+				// 会放掉 连接
 				EntityUtils.consume(entity);
 
 			}
 		} finally {
-			response.close();
+			response.close();// 释放掉 连接
+			// 所以这段代码 释放掉连接被调用了3次
 		}
 
 		return body;
@@ -324,8 +321,18 @@ public class HttpHandler {
 	 * 测试代码
 	 * 
 	 * @param args
+	 * @throws Exception
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+
+		String url = "http://localhost:8380/EMGD/test/test1";
+		String entity = null;
+
+		Map<String, String> map = new HashMap<>();
+		HttpHandler h = new HttpHandler();
+		map.put("aa", "好多个1");
+		String sentity = h.doPostWithParasForString(url, null, map);
+		System.out.println(sentity);
 
 	}
 
