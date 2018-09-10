@@ -22,7 +22,7 @@ public class TestDao {
 	@Test
 	public void test1() {
 
-		String name1 = "啊伤筋动骨撒谎的噶啥孤岛惊魂尴尬十多个哈德是看得见啊哈大声道奥斯卡大家好大家好的阿达坚实的阿打算接电话大家安顺达阿达科技收到货阿达科技大号"
+		/*String name1 = "啊伤筋动骨撒谎的噶啥孤岛惊魂尴尬十多个哈德是看得见啊哈大声道奥斯卡大家好大家好的阿达坚实的阿打算接电话大家安顺达阿达科技收到货阿达科技大号"
 				+ "阿萨德开始的大家卡号的爱上大健康收到货撒旦教阿达坚实的哈三等奖熬枯受淡爱神的箭阿可视电话啊大家都会";
 
 		char[] charArray = name1.toCharArray();
@@ -60,7 +60,8 @@ public class TestDao {
 			}.start();
 
 		}
-        while(true);
+        while(true); 
+        */
 	}
 
 }

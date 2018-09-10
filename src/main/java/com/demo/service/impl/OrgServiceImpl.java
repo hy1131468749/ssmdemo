@@ -2,6 +2,7 @@ package com.demo.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,13 +44,21 @@ public class OrgServiceImpl implements OrgService{
 	@Override
 	public Org selectByPrimaryKey(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return orgMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
 	public int updateByPrimaryKeySelective(Org record) {
-		// TODO Auto-generated method stub
-		return 0;
+		System.out.println("开始更新");
+		int a = orgMapper.updateByPrimaryKeySelective(record);
+		System.out.println("更新结果："+a);
+		try {
+			TimeUnit.SECONDS.sleep(100000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return a;
 	}
 
 	@Override
@@ -60,8 +69,14 @@ public class OrgServiceImpl implements OrgService{
 
 	@Override
 	public int updateByPrimaryKey(Org record) {
-		// TODO Auto-generated method stub
-		return 0;
+		int a = orgMapper.updateByPrimaryKey(record);
+		try {
+			TimeUnit.SECONDS.sleep(3);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return a;
 	}
 	
 	

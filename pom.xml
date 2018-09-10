@@ -28,7 +28,7 @@
 		<joda-time.version>2.10</joda-time.version>
 		<httpclient.version>4.5.6</httpclient.version>
 		<httpcore.version>4.4.10</httpcore.version>
-
+		<jedis.version>2.9.0</jedis.version>
 
 
 
@@ -240,6 +240,12 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
 			<version>${httpcore.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>
 		</dependency>
 
 	</dependencies>
