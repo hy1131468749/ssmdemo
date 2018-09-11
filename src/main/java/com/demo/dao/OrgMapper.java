@@ -19,5 +19,7 @@ public interface OrgMapper {
 
     int updateByPrimaryKey(Org record);
     
+    int updateTestByPrimaryKey(Org record);
+    
     List<Org> selectList();
 }

@@ -192,6 +192,22 @@
       remark = #{remark,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+    <update id="updateTestByPrimaryKey" parameterType="com.demo.bean.Org">
+    update org
+    set org_name = #{orgName,jdbcType=VARCHAR},
+      org_level = #{orgLevel,jdbcType=INTEGER},
+      org_manager = #{orgManager,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      org_phone = #{orgPhone,jdbcType=VARCHAR},
+      org_address = #{orgAddress,jdbcType=VARCHAR},
+      org_photo = #{orgPhoto,jdbcType=VARCHAR},
+      org_type = #{orgType,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      parent_yes = #{parentYes,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT} and parent_id > 0;
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.demo.bean.Org">
     update org
     set org_name = #{orgName,jdbcType=VARCHAR},

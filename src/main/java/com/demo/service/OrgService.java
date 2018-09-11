@@ -23,5 +23,7 @@ public interface OrgService {
 	int updateByPrimaryKey(Org record);
     
 	List<Org> selectList();
+	
+	int updateTestByPrimaryKey(Org record);
 
 }

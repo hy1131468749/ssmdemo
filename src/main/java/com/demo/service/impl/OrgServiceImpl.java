@@ -105,5 +105,11 @@ public class OrgServiceImpl implements OrgService{
 			
 	}
 
+	@Override
+	public int updateTestByPrimaryKey(Org record) {
+		
+		return orgMapper.updateTestByPrimaryKey(record);
+	}
+
 	
 }

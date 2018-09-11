@@ -251,6 +251,8 @@
 	</dependencies>
 
 	<build>
+	      <!--打包出来的名称  -->
+	      <finalName>ssmdeno</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
