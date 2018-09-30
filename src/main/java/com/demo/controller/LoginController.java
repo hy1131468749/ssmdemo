@@ -3,8 +3,6 @@ package com.demo.controller;
 
 import java.util.Map;
 
-import org.apache.logging.log4j.core.Appender;
-import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -15,6 +13,7 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,11 +33,20 @@ public class LoginController extends PublicController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("/")
+	@RequestMapping("/index")
 	public String index() {
-
+        
 		return "/login";
 	}
+	
+	
+	@RequestMapping("/testData")
+	@ResponseBody
+	public String testData(@RequestBody Map<String,Object> list) {
+        System.out.println(list);
+		return "aa";
+	}
+	
 	
 	/**
 	 * 用户登录

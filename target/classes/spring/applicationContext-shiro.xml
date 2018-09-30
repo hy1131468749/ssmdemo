@@ -53,10 +53,11 @@
     <!--配置 securityManager -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 	        <property name="realm" ref="realm" />   
+	         <property name="sessionManager" ref="sessionManager" /> 
 	        <property name="rememberMeManager" ref="rememberMeManager" />     	   		
 	</bean>
 	
-	
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager" />
     <!--shiroFilter这个名字 一定要和web.xml的名字一样  -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">		    	
 	    <!-- Shiro的核心安全接口，这个属性是必须的 -->
@@ -79,7 +80,8 @@
 	            /public/** = anon
 	            /html/** = anon
 	            /userLogin = anon
-	          	/** = authc
+	          	 <!-- /** = authc -->
+	          	/** = anon 
 	        </value>
 	    </property>
 	</bean>

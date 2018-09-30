@@ -1,7 +1,12 @@
 package com;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CyclicBarrier;
 
+import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +20,7 @@ import com.demo.util.JedisUtils;
 import com.demo.util.RedisLock;
 
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.ScanResult;
 
 @RunWith(SpringJUnit4ClassRunner.class) // 使用junit4进行测试
 @ContextConfiguration(locations = { "classpath:spring/applicationContext*.xml" }) // 加载配置文件
@@ -25,7 +31,7 @@ public class TestRedis {
 
 	
     private int i = 0;
-    
+        
     @Test
     public void test1() {
     	
@@ -40,18 +46,27 @@ public class TestRedis {
     
     @Test
     public void test2() {
-    	Teacher t =  JedisUtils.getObject("t:1");
-    	System.out.println(t.toString());
+    	//AbstractSessionDAO
+    	String s =  JedisUtils.get("shda1");
+    	System.out.println(s);
     }
     
     @Test 
     public void testGetLock() {
-    	RedisLock.tryLock("org:1", Thread.currentThread().getId()+"", 500000);
+    	JedisUtils.set("g:1", "含");
     }
     
     @Test 
     public void testUnlock() {
-    	RedisLock.releaseDistributedLock( "org:1", 1+"");
+    	for(int i=0;i<100;i++) {
+    		JedisUtils.set("a:"+i, "a"+i);
+    	}
+    	for(int i=0;i<100;i++) {
+    		JedisUtils.set("b:"+i, "b"+i);
+    	}
+    	for(int i=0;i<100;i++) {
+    		JedisUtils.set("c:"+i, "c"+i);
+    	}
     }
     
     @Test 
@@ -67,5 +82,15 @@ public class TestRedis {
     		new TestLockThread(c,orgService).start();
     	}
     	while(true);
+    }
+    
+    @Test
+    public void testScan() {
+    	Map<String,List<String>> scan = JedisUtils.scan("0", "a:*", 50);
+    	List<String> keys = scan.get("keys");
+    	List<String> values = scan.get("values");
+    	for(int i=0;i<keys.size();i++){
+    		System.out.println(keys.get(i)+" : "+values.get(i));
+    	}
     }
 }

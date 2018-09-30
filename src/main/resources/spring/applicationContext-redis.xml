@@ -27,7 +27,8 @@
 <!-- redis 单机资源池 -->
 <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
     <constructor-arg  index="0"  ref="jedisPoolConfig" />  
-    <constructor-arg  index="1"  value="${redis.ip}" />  
+    <!--type 不加 linux 启动tomcat报错  -->
+    <constructor-arg  index="1"  value="${redis.ip}" type="java.lang.String" />  
     <constructor-arg  index="2"  value="${redis.port}" type="int" />
     <constructor-arg  index="3"  value="${redis.timeout}" type="int" />
 </bean>	

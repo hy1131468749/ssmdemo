@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import com.demo.component.SpringContextUtil;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.ScanResult;
 import redis.clients.jedis.exceptions.JedisException;
 
 public class JedisUtils {
@@ -34,12 +36,13 @@ public class JedisUtils {
 		Jedis jedis = null;
 		try {
 			jedis = getResource();
+			
 			if (jedis.exists(key)) {
 				value = jedis.get(key);
 				value = StringUtils.isNotEmpty(value) && !"nil".equalsIgnoreCase(value) ? value : null;
 			}
 		} catch (Exception e) {
-			logger.warn("get {} = {}", key, value, e);
+			logger.error("get {} = {}", key, value, e);
 		} finally {
 			colse(jedis);
 		}
@@ -62,7 +65,7 @@ public class JedisUtils {
 			logger.debug("getObject {} = {}", key, value);
 
 		} catch (Exception e) {
-			logger.warn("getObject {} = {}", key, value, e);
+			logger.error("getObject {} = {}", key, value, e);
 		} finally {
 			colse(jedis);
 		}
@@ -88,7 +91,7 @@ public class JedisUtils {
 			result = jedis.set(key, value);
 			jedis.setex(key, cacheSeconds, value);
 		} catch (Exception e) {
-			logger.warn("set {} = {}", key, value, e);
+			logger.error("set {} = {}", key, value, e);
 		} finally {
 			colse(jedis);
 		}
@@ -114,7 +117,8 @@ public class JedisUtils {
 			result = jedis.set(key, value);
 			jedis.set(key, value);
 		} catch (Exception e) {
-			logger.warn("set {} = {}", key, value, e);
+			
+			logger.error("set {} = {}", key, value, e);
 		} finally {
 			colse(jedis);
 		}
@@ -128,7 +132,7 @@ public class JedisUtils {
 			jedis = getResource();
 			result = jedis.set(getBytesKey(key), toBytes(value));
 		} catch (Exception e) {
-			logger.warn("setObject {} = {}", key, value, e);
+			logger.error("setObject {} = {}", key, value, e);
 		} finally {
 			colse(jedis);
 		}
@@ -825,6 +829,43 @@ public class JedisUtils {
 		return result;
 	}
 
+	
+	
+	
+	
+	public static Map<String,List<String>> scan(String cursor,String pattern,int count) {
+		Jedis jedis = null;
+		ScanResult<String> scan = null;
+		Map<String,List<String>> list = new HashMap<>(); 
+		List<String> keys = new ArrayList<>();
+		List<String> values = new ArrayList<>();
+		try {
+			jedis = getResource();
+			ScanParams scanParams = new ScanParams();
+			scanParams.match(pattern);
+			scanParams.count(count);
+			scan = jedis.scan(cursor, scanParams);
+			while(!"0".equals(scan.getStringCursor())) {
+				scan = jedis.scan(scan.getStringCursor(), scanParams);
+				List<String> result = scan.getResult();
+				keys.addAll(result);
+				String[] sresulyt = new String[result.size()]; 
+				sresulyt =	 result.toArray(sresulyt);
+				List<String> mget = jedis.mget(sresulyt);
+				values.addAll(mget);
+			}
+			
+			
+		}catch (Exception e) {
+			//logger.warn("delObject {}", key, e);
+		} finally {
+			colse(jedis);
+		}
+		list.put("keys", keys);
+		list.put("values",values);
+		return list;
+	}
+	
 	/**
 	 * 缓存是否存在
 	 * 

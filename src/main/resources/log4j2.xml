@@ -124,24 +124,25 @@
 	<loggers>
 		<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
 		<!--过滤掉一些无用的DEBUG信息 -->
-		<logger name="org.springframework" level="ERROR"
+		<logger name="org.springframework" level="INFO"
 			additivity="false">
-			<appender-ref ref="Console" />
+			
 		</logger>
 		<logger name="org.apache.ibatis" level="ERROR"
 			additivity="false">
-			<appender-ref ref="Console" />
+			
 		</logger>
 		
-       <logger name="com.demo.dao" level="ERROR"
+       <logger name="com.demo.dao" level="DEBUG"
 			additivity="false">
-			<appender-ref ref="Console" />
+			
 		</logger>
 
 		<!--只有在root配置了 才会在日志输出 -->
 		<root level="DEBUG">
 			
 			
+			<appender-ref ref="RollingFileDebug" />
 			<appender-ref ref="RollingFileInfo" />
 			<appender-ref ref="RollingFileWarn" />
 			<appender-ref ref="RollingFileError" />

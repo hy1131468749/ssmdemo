@@ -123,4 +123,14 @@ public class Student implements Serializable{
     public void setCid(String cid) {
         this.cid = cid == null ? null : cid.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", number=" + number + ", age=" + age + ", sex=" + sex
+				+ ", cName=" + cName + ", teacherName=" + teacherName + ", score=" + score + ", createTime="
+				+ createTime + ", modifyTime=" + modifyTime + ", remark=" + remark + ", cid=" + cid + "]";
+	}
+    
+    
+    
 }
